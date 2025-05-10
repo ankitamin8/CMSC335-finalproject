@@ -58,7 +58,9 @@ app.get('/recent', async (req, res) => {
     if (searchCol) {
       recent = await searchCol.find().sort({ createdAt: -1 }).limit(5).toArray();
     }
-  } catch (e) {}
+  } catch (e) {
+    console.error(e);
+  }
   res.json(recent);
 });
 
@@ -70,22 +72,7 @@ async function start() {
   await dbClient.connect();
   dbConn = dbClient.db(process.env.MONGO_DB_NAME);
   searchCol = dbConn.collection(process.env.MONGO_COLLECTION);
-  const server = app.listen(PORT, () => {
-    console.log(`Web server started and running at http://localhost:${PORT}`);
-    console.log('Stop to shutdown the server:');
-    const readline = require('readline');
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
-    rl.on('line', async (input) => {
-      if (input.trim().toLowerCase() === 'stop') {
-        console.log('Shutting Down Server');
-        await dbClient.close();
-        server.close(() => process.exit(0));
-        rl.close();
-        
-      }
-    });
+  app.listen(PORT, () => {
+    console.log(`Web server running on port ${PORT}`);
   });
 }
