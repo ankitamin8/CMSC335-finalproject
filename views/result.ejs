@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Result</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1>Weather in <%= city %></h1>
+  <div>
+    <p><strong>Latitude:</strong> <%= lat %></p>
+    <p><strong>Longitude:</strong> <%= lon %></p>
+    <p><strong>Temperature:</strong> <%= weather.current.temp %>°C</p>
+    <p><strong>Weather:</strong> <%= weather.current.weather[0].description %></p>
+    <a href="/">Back</a>
+  </div>
+</body>
+</html>

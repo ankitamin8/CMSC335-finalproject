@@ -1,0 +1,17 @@
+{
+  "name": "weather-search-app",
+  "version": "1.0.0",
+  "description": "A simple Node.js app to search weather and store results in MongoDB.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.9",
+    "express": "^4.19.2",
+    "mongodb": "^6.16.0",
+    "mongoose": "^8.3.5"
+  }
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Search</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1>Weather Search</h1>
+  <form action="/weather" method="POST">
+    <label for="city">City:</label>
+    <input type="text" id="city" name="city" required>
+    <button type="submit">Get Weather</button>
+  </form>
+  <div class="recent">
+    <h2>Recent Searches</h2>
+    <ul id="recent-list"></ul>
+  </div>
+  <script>
+    // Fetch and display recent searches
+    fetch('/recent').then(r => r.json()).then(data => {
+      const ul = document.getElementById('recent-list');
+      data.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.city} (lat: ${item.lat}, lon: ${item.lon})`;
+        ul.appendChild(li);
+      });
+    });
+  </script>
+</body>
+</html>
