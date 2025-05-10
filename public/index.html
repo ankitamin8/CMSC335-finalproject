@@ -24,7 +24,7 @@
       const ul = document.getElementById('recent-list');
       data.forEach(item => {
         const li = document.createElement('li');
-        li.textContent = `${item.city} (lat: ${item.lat}, lon: ${item.lon})`;
+        li.textContent = `${item.city} (${item.weather.current.temp_c}°C, ${item.weather.current.condition.text})`;
         ul.appendChild(li);
       });
     });
