@@ -1,23 +1,44 @@
-body {
+body
+{
   background-color: #e3f2fd;
-  color: #222;
-  font-size: 18px;
-  font-family: 'Roboto', sans-serif;
+  color: black;
+  font-size: 25px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-h1 {
-  color: #1976d2;
+h1
+{
+  color: green;
 }
 
-form {
+form
+{
   margin: 2em 0;
 }
 
-input, button {
+
+
+
+button
+{
   font-size: 1em;
   padding: 0.5em;
 }
 
-.recent {
+
+button:hover
+{
+  background-color: #1976d2;
+  color: white;
+}
+
+input
+{
+  font-size: 1em;
+  padding: 0.5em;
+}
+
+.last
+{
   margin-top: 2em;
 }

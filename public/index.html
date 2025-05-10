@@ -21,6 +21,14 @@
 
   </form>
 
+  <form>
+    
+    <button id="surprise" type="button">Surprise Me</button>
+
+  </form>
+
+  <div id="surprise-video" style="margin: 1em 0;"></div>
+
   <div class="recent">
 
     <h2>Recent Searches</h2>
@@ -34,19 +42,32 @@
     async function loadRecentSearches()
     {
       
-        const response = await fetch('/recent');
-        const data = await response.json();
+      const response = await fetch('/recent');
+      const data = await response.json();
 
-        let result = '<table border="1"><tr><th>City</th><th>Temperature</th><th>Condition</th></tr>';
+      let result = '<table border="1"><tr><th>City</th><th>Temperature</th><th>Condition</th></tr>';
 
-        data.forEach(item => {result += `<tr><td>${item.city}</td><td>${item.weather.current.temp_c}°C</td><td>${item.weather.current.condition.text}</td></tr>`;});
+      data.forEach(item => { result += `<tr><td>${item.city}</td><td>${item.weather.current.temp_c}°C</td><td>${item.weather.current.condition.text}</td></tr>`; });
 
-        result += '</table>';
+      result += '</table>';
 
-        document.getElementById('last').innerHTML = result;
+      document.getElementById('last').innerHTML = result;
     }
 
-    document.addEventListener('DOMContentLoaded', loadRecentSearches);
+    function setupSurpriseButton()
+    {
+      const button = document.getElementById('surprise');
+
+      button.addEventListener('click', () => {
+
+        const container = document.getElementById('surprise-video');
+       
+        container.innerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen> </iframe>`;
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', loadRecentSearches());
+    document.addEventListener('DOMContentLoaded', setupSurpriseButton());
 
   </script>
 
