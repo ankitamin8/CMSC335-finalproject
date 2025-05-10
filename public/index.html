@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,27 +8,68 @@
   <link rel="stylesheet" href="/styles.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
+
 <body>
+
   <h1>Weather Search</h1>
+
   <form action="/weather" method="POST">
+
     <label for="city">City:</label>
     <input type="text" id="city" name="city" required>
     <button type="submit">Get Weather</button>
+
   </form>
+
+  <form>
+    
+    <button id="surprise" type="button">Surprise Me</button>
+
+  </form>
+
+  <div id="surprise-video" style="margin: 1em 0;"></div>
+
   <div class="recent">
+
     <h2>Recent Searches</h2>
-    <ul id="recent-list"></ul>
+    
+    <div id="last"></div>
+
   </div>
+  
   <script>
-    // Fetch and display recent searches
-    fetch('/recent').then(r => r.json()).then(data => {
-      const ul = document.getElementById('recent-list');
-      data.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = `${item.city} (${item.weather.current.temp_c}°C, ${item.weather.current.condition.text})`;
-        ul.appendChild(li);
+
+    async function loadRecentSearches()
+    {
+      
+      const response = await fetch('/recent');
+      const data = await response.json();
+
+      let result = '<table border="1"><tr><th>City</th><th>Temperature</th><th>Condition</th></tr>';
+
+      data.forEach(item => { result += `<tr><td>${item.city}</td><td>${item.weather.current.temp_c}°C</td><td>${item.weather.current.condition.text}</td></tr>`; });
+
+      result += '</table>';
+
+      document.getElementById('last').innerHTML = result;
+    }
+
+    function setupSurpriseButton()
+    {
+      const button = document.getElementById('surprise');
+
+      button.addEventListener('click', () => {
+
+        const container = document.getElementById('surprise-video');
+       
+        container.innerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen> </iframe>`;
       });
-    });
+    }
+
+    document.addEventListener('DOMContentLoaded', loadRecentSearches());
+    document.addEventListener('DOMContentLoaded', setupSurpriseButton());
+
   </script>
+
 </body>
 </html>

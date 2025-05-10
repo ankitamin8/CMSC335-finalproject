@@ -84,6 +84,7 @@ async function start() {
         await dbClient.close();
         server.close(() => process.exit(0));
         rl.close();
+        
       }
     });
   });
