@@ -12,8 +12,8 @@
   <div>
     <p><strong>Latitude:</strong> <%= lat %></p>
     <p><strong>Longitude:</strong> <%= lon %></p>
-    <p><strong>Temperature:</strong> <%= weather.current.temp %>°C</p>
-    <p><strong>Weather:</strong> <%= weather.current.weather[0].description %></p>
+    <p><strong>Temperature:</strong> <%= weather.current.temp_c %>°C</p>
+    <p><strong>Weather:</strong> <%= weather.current.condition.text %></p>
     <a href="/">Back</a>
   </div>
 </body>

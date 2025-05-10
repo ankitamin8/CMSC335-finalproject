@@ -30,38 +30,31 @@ app.get('/', async (req, res) => {
 
 // Handle form submission
 app.post('/weather', async (req, res) => {
-  const city = req.body.city;
+  const city = req.body.city ? req.body.city.trim() : '';
   if (!city) return res.status(400).render('error', { message: 'City required' });
   try {
-    // 1. Get coordinates from OpenWeatherMap Geocoding API
-    const geoResp = await axios.get(`https://api.openweathermap.org/geo/1.0/direct`, {
+    // 1. Get weather from WeatherAPI.com
+    const apiKey = process.env.WEATHER_API_KEY;
+    const weatherResp = await axios.get('http://api.weatherapi.com/v1/current.json', {
       params: {
-        q: city,
-        limit: 1,
-        appid: process.env.OWM_API_KEY
+        key: apiKey,
+        q: city
       }
     });
-    if (!geoResp.data.length) return res.status(404).render('error', { message: 'City not found' });
-    const { lat, lon } = geoResp.data[0];
+    const weatherData = weatherResp.data;
+    const lat = weatherData.location.lat;
+    const lon = weatherData.location.lon;
 
-    // 2. Get weather from One Call API
-    const weatherResp = await axios.get('https://api.openweathermap.org/data/3.0/onecall', {
-      params: {
-        lat,
-        lon,
-        units: 'metric',
-        appid: process.env.OWM_API_KEY
-      }
-    });
-
-    // 3. Save search to MongoDB
-    const record = { city, lat, lon, weather: weatherResp.data, createdAt: new Date() };
+    // 2. Save search to MongoDB
+    const record = { city, lat, lon, weather: weatherData, createdAt: new Date() };
     if (searchCol) await searchCol.insertOne(record);
 
-    // 4. Show result
-    res.render('result', { city, lat, lon, weather: weatherResp.data });
+    // 3. Show result
+    res.render('result', { city, lat, lon, weather: weatherData });
   } catch (err) {
-    res.status(500).render('error', { message: 'Error fetching weather' });
+    // Log detailed error for debugging
+    console.error("API error:", err.response ? err.response.data : err.message);
+    res.status(500).render('error', { message: 'Error fetching weather: ' + (err.response?.data?.error?.message || err.message) });
   }
 });
 
